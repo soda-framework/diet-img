@@ -30,15 +30,17 @@ class SodaDietImageServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->config->set('filesystems.disks.s3.visibility', 'public');
+
         $this->app->singleton('soda.image', function ($app) {
             $sodaDisk = Storage::disk(config('soda.upload.driver'));
 
-            return \League\Glide\ServerFactory::create([
+            $imageServer = \League\Glide\ServerFactory::create([
                 'source'            => $sodaDisk->getDriver(),
                 'cache'             => $sodaDisk->getDriver(),
                 'cache_path_prefix' => 'cache',
                 'driver'            => 'gd',
-                'base_url'          => $sodaDisk->url(trim(config('soda.upload.folder'), '/')),
+                'base_url'          => $sodaDisk->url('/'),
                 'presets'           => [
                     'small'       => [
                         'w'   => 250,
@@ -79,6 +81,8 @@ class SodaDietImageServiceProvider extends ServiceProvider
                     ],
                 ],
             ]);
+
+            return new ImageProcessor($imageServer);
         });
     }
 

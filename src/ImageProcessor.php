@@ -20,6 +20,6 @@ class ImageProcessor
             $manipulations = ['p' => $manipulations];
         }
 
-        return $this->imageServer->outputImage($imgUrl, $manipulations);
+        return $this->imageServer->getBaseUrl() . '/' . $this->imageServer->makeImage($imgUrl, $manipulations);
     }
 }

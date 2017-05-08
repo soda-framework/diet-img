@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Soda\\DietImg\\": "src/"
+      "Soda\\DietImage\\": "src/"
     }
   },
   "extra": {
