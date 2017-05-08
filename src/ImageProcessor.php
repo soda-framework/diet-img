@@ -34,6 +34,11 @@ class ImageProcessor
 
     protected function generateImage($imgUrl, $manipulations = [])
     {
-        return $this->imageServer->getBaseUrl().'/'.$this->imageServer->makeImage($imgUrl, $manipulations);
+        try {
+            return $this->imageServer->getBaseUrl().'/'.$this->imageServer->makeImage($imgUrl, $manipulations);
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return $imgUrl;
+        }
     }
 }
