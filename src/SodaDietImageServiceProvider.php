@@ -12,7 +12,7 @@ class SodaDietImageServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
 
     /**
      * Perform post-registration booting of services.
@@ -21,6 +21,9 @@ class SodaDietImageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        app('soda')->macro('image', function () {
+            return app('soda.image');
+        });
     }
 
     /**
@@ -81,15 +84,6 @@ class SodaDietImageServiceProvider extends ServiceProvider
 
             return new ImageProcessor($imageServer);
         });
-
-        $sodaInstance = app('soda');
-        $sodaInstanceClass = get_class($sodaInstance);
-
-        if (method_exists($sodaInstanceClass, 'macro')) {
-            $sodaInstanceClass::macro('image', function () {
-                return app('soda.image');
-            });
-        }
     }
 
     /**
