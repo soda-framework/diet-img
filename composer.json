@@ -1,0 +1,35 @@
+{
+  "name": "soda-framework/diet-img",
+  "license": "MIT",
+  "description": "Soda Framework: Diet Images",
+  "keywords": [
+    "CMS",
+    "Soda",
+    "Framework",
+    "Diet",
+    "Images",
+    "Laravel"
+  ],
+  "authors": [
+    {
+      "name": "Ryan Brereton-Canham",
+      "email": "ryzaar@hotmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "soda-framework/cms": ">0.4",
+    "league/glide": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Soda\\DietImg\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-release/0.1": "0.1.x-dev",
+      "dev-master": "0.1.x-dev"
+    }
+  }
+}
