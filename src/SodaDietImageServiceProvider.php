@@ -30,14 +30,15 @@ class SodaDietImageServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('soda.diet-image', function ($app) {
+        $this->app->singleton('soda.image', function ($app) {
             $sodaDisk = Storage::disk(config('soda.upload.driver'));
 
             return \League\Glide\ServerFactory::create([
-                'source'            => $sodaDisk,
-                'cache'             => $sodaDisk,
+                'source'            => $sodaDisk->getDriver(),
+                'cache'             => $sodaDisk->getDriver(),
                 'cache_path_prefix' => 'cache',
                 'driver'            => 'gd',
+                'base_url'          => $sodaDisk->url(trim(config('soda.upload.folder'), '/')),
                 'presets'           => [
                     'small'       => [
                         'w'   => 250,
@@ -79,15 +80,6 @@ class SodaDietImageServiceProvider extends ServiceProvider
                 ],
             ]);
         });
-
-        $sodaInstance = app('soda');
-        $sodaInstanceClass = get_class($sodaInstance);
-
-        if(method_exists($sodaInstanceClass,'macro')) {
-            $sodaInstanceClass::macro('image', function() {
-                return app('soda.diet-image');
-            });
-        }
     }
 
     /**
@@ -98,7 +90,7 @@ class SodaDietImageServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'soda.diet-image',
+            'soda.image',
         ];
     }
 }
