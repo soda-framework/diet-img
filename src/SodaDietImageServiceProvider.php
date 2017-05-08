@@ -2,8 +2,8 @@
 
 namespace Soda\DietImage;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\ServiceProvider;
 
 class SodaDietImageServiceProvider extends ServiceProvider
 {
@@ -30,14 +30,14 @@ class SodaDietImageServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('soda.diet-image', function ($app) {
-            $sodaDisk = Storage::disk(config('soda.upload.driver'));
-
-            return \League\Glide\ServerFactory::create([
-                'source'            => $sodaDisk,
-                'cache'             => $sodaDisk,
+        $this->app->singleton('soda.image', function ($app) {
+            $sodaDisk = Storage::disk(config('soda.upload.default'));
+            $imageServer = \League\Glide\ServerFactory::create([
+                'source'            => $sodaDisk->getDriver(),
+                'cache'             => $sodaDisk->getDriver(),
                 'cache_path_prefix' => 'cache',
                 'driver'            => 'gd',
+                'base_url'          => $sodaDisk->url(''),
                 'presets'           => [
                     'small'       => [
                         'w'   => 250,
@@ -78,14 +78,16 @@ class SodaDietImageServiceProvider extends ServiceProvider
                     ],
                 ],
             ]);
+
+            return new ImageProcessor($imageServer);
         });
 
         $sodaInstance = app('soda');
         $sodaInstanceClass = get_class($sodaInstance);
 
-        if(method_exists($sodaInstanceClass,'macro')) {
-            $sodaInstanceClass::macro('image', function() {
-                return app('soda.diet-image');
+        if (method_exists($sodaInstanceClass, 'macro')) {
+            $sodaInstanceClass::macro('image', function () {
+                return app('soda.image');
             });
         }
     }
@@ -98,7 +100,7 @@ class SodaDietImageServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'soda.diet-image',
+            'soda.image',
         ];
     }
 }

@@ -18,18 +18,19 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "soda-framework/cms": ">0.4",
+    "soda-framework/cms": "^0.7",
     "league/glide": "^1.2"
   },
   "autoload": {
     "psr-4": {
-      "Soda\\DietImg\\": "src/"
+      "Soda\\DietImage\\": "src/"
     }
   },
   "extra": {
     "branch-alias": {
       "dev-release/0.1": "0.1.x-dev",
-      "dev-master": "0.1.x-dev"
+      "dev-release/0.2": "0.2.x-dev",
+      "dev-master": "0.2.x-dev"
     }
   }
 }

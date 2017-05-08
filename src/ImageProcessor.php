@@ -7,6 +7,7 @@ use League\Glide\Server;
 class ImageProcessor
 {
     protected $imageServer;
+    protected $baseUrl;
 
     public function __construct(Server $imageServer)
     {
@@ -16,10 +17,10 @@ class ImageProcessor
     public function optimize($imgUrl, $manipulations)
     {
         // If string is supplied, assume it is a preset
-        if($manipulations && !is_array($manipulations)) {
+        if ($manipulations && ! is_array($manipulations)) {
             $manipulations = ['p' => $manipulations];
         }
 
-        return $this->imageServer->outputImage($imgUrl, $manipulations);
+        return $this->imageServer->getBaseUrl() . '/' . $this->imageServer->makeImage($imgUrl, $manipulations);
     }
 }
