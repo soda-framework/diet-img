@@ -16,7 +16,7 @@ class ImageProcessor
     public function optimize($imgUrl, $manipulations)
     {
         // If string is supplied, assume it is a preset
-        if($manipulations && !is_array($manipulations)) {
+        if ($manipulations && ! is_array($manipulations)) {
             $manipulations = ['p' => $manipulations];
         }
 
