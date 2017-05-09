@@ -2,8 +2,8 @@
 
 namespace Soda\DietImage;
 
-use Illuminate\Support\Facades\Cache;
 use League\Glide\Server;
+use Illuminate\Support\Facades\Cache;
 
 class ImageProcessor
 {
@@ -18,7 +18,7 @@ class ImageProcessor
     public function optimize($imgUrl, $manipulations = [], $cache = true)
     {
         // If string is supplied, assume it is a preset
-        if ($manipulations && !is_array($manipulations)) {
+        if ($manipulations && ! is_array($manipulations)) {
             $manipulations = ['p' => $manipulations];
         }
 
@@ -38,6 +38,7 @@ class ImageProcessor
             return $this->imageServer->getBaseUrl().'/'.$this->imageServer->makeImage($imgUrl, $manipulations);
         } catch (\Exception $e) {
             \Log::error($e);
+
             return $imgUrl;
         }
     }
