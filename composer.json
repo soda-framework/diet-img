@@ -18,7 +18,7 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "soda-framework/cms": "^0.7",
+    "soda-framework/cms": ">=0.7",
     "league/glide": "^1.2"
   },
   "autoload": {
